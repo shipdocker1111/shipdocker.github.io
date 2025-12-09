@@ -1,107 +1,203 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-
-<title>Phishing Alarm</title>
-
-<style>
-    body {
-        margin: 0;
-        background: black;
-        overflow: hidden;
-        font-family: 'Courier New', monospace;
-    }
-
-    /* Statisches Flickern */
-    @keyframes flicker {
-        0% { opacity: 1; }
-        50% { opacity: 0.8; }
-        100% { opacity: 1; }
-    }
-
-    /* Glitch Effekte */
-    @keyframes glitch {
-        0% { clip-path: inset(0 0 90% 0); transform: translate(0); }
-        20% { clip-path: inset(10% 0 60% 0); transform: translate(-5px, 3px); }
-        40% { clip-path: inset(40% 0 20% 0); transform: translate(7px, -3px); }
-        60% { clip-path: inset(20% 0 50% 0); transform: translate(-3px, 2px); }
-        80% { clip-path: inset(60% 0 10% 0); transform: translate(4px, 1px); }
-        100% { clip-path: inset(0 0 90% 0); transform: translate(0); }
-    }
-
-    .warning {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: red;
-        font-size: 5rem;
-        text-shadow: 0 0 20px red, 0 0 40px red;
-        text-align: center;
-        animation: glitch 1.5s infinite steps(2, end), flicker 3s infinite;
-    }
-
-    .sub {
-        color: #990000;
-        font-size: 1.5rem;
-        margin-top: 20px;
-        animation: flicker 3s infinite;
-    }
-
-    /* Scanlines-Effekt */
-    .scanlines {
-        pointer-events: none;
-        position: fixed;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background: repeating-linear-gradient(
-            to bottom,
-            rgba(255,0,0,0.03) 0px,
-            rgba(255,0,0,0.03) 2px,
-            rgba(0,0,0,0.1) 3px
-        );
-        animation: flicker 2s infinite;
-    }
-
-</style>
-</head>
-
-<body>
-
-<div class="warning">
-    ⚠ SYSTEMBREACH ⚠  
-    <div class="sub">ZUGRIFF ERKANNT — SICHERHEITSVERLETZUNG</div>
-    <div class="sub">🎣 DU BIST HINEINGEFALLEN — PHISHING SIMULATION 🎣</div>
-</div>
-
-<div class="scanlines"></div>
-
-<!-- Optionaler Horror-Glitch-Sound -->
-<audio id="glitchsound" src="https://files.catbox.moe/8fp8dp.mp3"></audio>
-
-<script>
-    // Fullscreen nach erstem Klick
-    function goFullscreen() {
-        let elem = document.documentElement;
-        if (elem.requestFullscreen) elem.requestFullscreen();
-    }
-
-    document.addEventListener("click", function playAnimationOnce() {
-        goFullscreen();
-
-        // Sound abspielen, falls erlaubt
-        const sound = document.getElementById("glitchsound");
-        if (sound) {
-            sound.volume = 0.3;
-            sound.play().catch(()=>{});
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>!!! SYSTEMKRITISCHER FEHLER - SICHERHEITSBREACH !!!</title>
+    <!-- Lade Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Verwende Monospace-Schrift für den Hacker-Look */
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #000000; /* Tiefschwarz */
+            color: #E0E0E0;
+            overflow: hidden; /* Verhindert Scrollbalken durch Glitches */
+        }
+        
+        /* 1. Simulierter Static-Noise / Rauschen im Vordergrund */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* Schnelle Linien, die flackern */
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.6),
+                rgba(0, 0, 0, 0.6) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            opacity: 0.15; /* Subtil aber spürbar */
+            animation: static-noise 0.1s infinite;
+            z-index: 10;
         }
 
-        document.removeEventListener("click", playAnimationOnce);
-    });
-</script>
+        @keyframes static-noise {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        /* 2. Vignetten-Effekt (dunkelt die Ränder ab) */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Wichtig, damit Klicks durchgehen */
+            /* Erzeugt einen weichen Übergang von transparent in der Mitte zu schwarz an den Rändern */
+            background: radial-gradient(ellipse at center, 
+                rgba(0,0,0,0) 0%, 
+                rgba(0,0,0,0) 50%, 
+                rgba(0,0,0,0.8) 100%
+            );
+            z-index: 15; /* Zwischen Noise und Hauptinhalt */
+        }
+
+        /* Haupt-Glitch-Effekt: Extrem aggressiv */
+        .glitch-major {
+            color: #FF0055; /* Neon-Rot */
+            text-shadow: 
+                5px 0 0 #00FF00, /* Starker Neon-Grüner Schatten */
+                -5px 0 0 #00FFFF, /* Cyaner Schatten */
+                0 0 20px rgba(255, 0, 85, 0.9);
+            animation: glitch-major 0.15s infinite alternate; /* Sehr schnelle Frequenz */
+        }
+
+        @keyframes glitch-major {
+            0% {
+                transform: translate(0);
+                opacity: 0.95;
+                text-shadow: 5px 0 0 #00FF00, -5px 0 0 #00FFFF;
+            }
+            33% {
+                transform: translate(-10px, 0); /* Stärkere Verschiebung */
+                opacity: 0.6;
+            }
+            66% {
+                transform: translate(8px, 8px);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0);
+                opacity: 0.85;
+                text-shadow: 6px -6px 0 #FF00FF, -6px 6px 0 #FFFF00;
+            }
+        }
+
+        /* Subtiler Glitch für sekundäre Texte */
+        .glitch-minor {
+            animation: glitch-minor 0.5s infinite steps(2, end);
+        }
+
+        @keyframes glitch-minor {
+            0% { transform: translate(2px, -2px); }
+            50% { transform: translate(-2px, 2px); }
+            100% { transform: translate(2px, -2px); }
+        }
+
+        /* Flicker-Effekt für den gesamten Kasten (simuliert Stromausfälle) */
+        .flicker-box {
+            animation: flicker 2s infinite; /* Schnelleres Flackern */
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+            20%, 24%, 55% { opacity: 0.6; filter: brightness(1.5); }
+        }
+
+        .matrix-bg {
+            /* Simuliert Hintergrunddaten */
+            background-image: linear-gradient(
+                rgba(0, 255, 0, 0.15), 
+                rgba(0, 255, 0, 0.08)
+            ), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="10" height="10" fill="transparent"/><text x="0" y="8" font-size="10" fill="%2300ff00" opacity="0.1">X-0</text></svg>');
+            background-size: 10px 10px;
+        }
+
+        .alert-box {
+            border: 5px solid #FF0055;
+            box-shadow: 0 0 50px #FF0055; /* Sehr starker Schimmer */
+            z-index: 20;
+            position: relative; /* Über dem Static-Noise und der Vignette */
+        }
+    </style>
+</head>
+<body class="matrix-bg min-h-screen flex items-center justify-center p-4">
+
+    <!-- Haupt-Container für die Warnmeldung mit Flicker-Effekt -->
+    <div class="alert-box flicker-box w-full max-w-2xl p-6 md:p-10 bg-black/90 rounded-none border-t-8 border-b-8">
+        
+        <!-- Simulationsanzeige (flackernd) -->
+        <div class="text-center mb-6">
+            <h1 class="text-5xl md:text-7xl font-bold glitch-major uppercase tracking-widest leading-none">
+                <span class="glitch-minor">BREACH</span>
+            </h1>
+            <pre class="text-sm text-green-400 mt-4 glitch-minor select-none">[0x4C3B] ACCESS DENIED | DATENLADUNG FEHLGESCHLAGEN</pre>
+            
+            <p id="time-stamp" class="text-red-500 mt-4 text-xl md:text-2xl font-bold pt-2"></p>
+        </div>
+
+        <!-- Warnfenster-Inhalt (Weniger Text) -->
+        <div class="bg-gray-900/80 p-6 md:p-8 rounded-none border-2 border-red-500">
+            <h2 class="text-2xl md:text-3xl font-bold text-red-400 mb-4 flex items-center">
+                <svg class="w-8 h-8 mr-3 fill-current glitch-major" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm1 14h-2v-4h2v4zm0-6h-2V8h2v2z"/></svg>
+                <span class="glitch-major">PHISHING: ALARMSTUFE ROT</span>
+            </h2>
+            
+            <p class="text-lg md:text-xl text-red-300 leading-tight border-l-4 border-red-500 pl-4 py-2 mb-6">
+                DIES IST EINE AKUTE SCHULUNGS-SIMULATION. <br>
+                EIN KLICK GENÜGT. DIE GEFAHR IST REAL.
+            </p>
+ 
+        </div>
+
+        <!-- Footer / Simulation Ende -->
+        <div class="mt-8 text-center text-gray-700 text-sm">
+            <p class="glitch-minor">--- [ V O R S I C H T | ZUGRIFF NOCH MÖGLICH ] ---</p>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript für den Live-Timestamp und Statusanzeige
+        const timeStampElement = document.getElementById('time-stamp');
+        
+        function updateTimeStamp() {
+            const now = new Date();
+            // Formatierung im Hacker-Stil: HH:MM:SS
+            const formattedTime = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            
+            // Fügen Sie einen zufälligen, flackernden Status hinzu, um es unheimlicher zu machen
+            const statuses = ["INTRUSION DETECTED", "SCANNING...", "CONNECTION LOST", "ACCESS DENIED"];
+            const status = statuses[Math.floor(Math.random() * statuses.length)];
+
+            timeStampElement.innerHTML = `<span class="text-red-500 glitch-minor">[${status}]</span> <span class="text-green-500">${formattedTime}Z</span>`;
+        }
+
+        // Aktualisiert die Zeit jede Sekunde
+        setInterval(updateTimeStamp, 1000);
+        updateTimeStamp(); // Sofortiger Start
+
+        // NEU: Fullscreen-Funktion bei Klick für bessere Lesbarkeit und Immersion
+        document.addEventListener('click', function() {
+            // Überprüft, ob das Dokument bereits im Vollbildmodus ist
+            if (!document.fullscreenElement) {
+                // Fordert den Vollbildmodus für das gesamte HTML-Element an
+                document.documentElement.requestFullscreen().catch(err => {
+                    // Zeigt eine Meldung, wenn der Vollbildmodus nicht aktiviert werden konnte (z. B. wegen iFrame-Einschränkungen)
+                    console.log(`Fehler beim Versuch, in den Vollbildmodus zu wechseln (Dies kann in einer Sandbox-Umgebung passieren): ${err.message}`);
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
