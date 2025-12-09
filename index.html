@@ -1,31 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Phishing Training</title>
+<meta charset="UTF-8">
+
+<title>Phishing Alarm</title>
+
+<style>
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+        font-family: 'Courier New', monospace;
+    }
+
+    /* Statisches Flickern */
+    @keyframes flicker {
+        0% { opacity: 1; }
+        50% { opacity: 0.8; }
+        100% { opacity: 1; }
+    }
+
+    /* Glitch Effekte */
+    @keyframes glitch {
+        0% { clip-path: inset(0 0 90% 0); transform: translate(0); }
+        20% { clip-path: inset(10% 0 60% 0); transform: translate(-5px, 3px); }
+        40% { clip-path: inset(40% 0 20% 0); transform: translate(7px, -3px); }
+        60% { clip-path: inset(20% 0 50% 0); transform: translate(-3px, 2px); }
+        80% { clip-path: inset(60% 0 10% 0); transform: translate(4px, 1px); }
+        100% { clip-path: inset(0 0 90% 0); transform: translate(0); }
+    }
+
+    .warning {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: red;
+        font-size: 5rem;
+        text-shadow: 0 0 20px red, 0 0 40px red;
+        text-align: center;
+        animation: glitch 1.5s infinite steps(2, end), flicker 3s infinite;
+    }
+
+    .sub {
+        color: #990000;
+        font-size: 1.5rem;
+        margin-top: 20px;
+        animation: flicker 3s infinite;
+    }
+
+    /* Scanlines-Effekt */
+    .scanlines {
+        pointer-events: none;
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background: repeating-linear-gradient(
+            to bottom,
+            rgba(255,0,0,0.03) 0px,
+            rgba(255,0,0,0.03) 2px,
+            rgba(0,0,0,0.1) 3px
+        );
+        animation: flicker 2s infinite;
+    }
+
+</style>
 </head>
-<body style="background:black; color:red; margin:0; text-align:center; padding-top:10%;">
-  <h1>🎣 HEREINGEFALLEN! 🎣</h1>
-  <p>Dies ist ein Test deiner Phishing-Schulung.</p>
-</body>
-</html>
+
+<body>
+
+<div class="warning">
+    ⚠ SYSTEMBREACH ⚠  
+    <div class="sub">ZUGRIFF ERKANNT — SICHERHEITSVERLETZUNG</div>
+    <div class="sub">🎣 DU BIST HINEINGEFALLEN — PHISHING SIMULATION 🎣</div>
+</div>
+
+<div class="scanlines"></div>
+
+<!-- Optionaler Horror-Glitch-Sound -->
+<audio id="glitchsound" src="https://files.catbox.moe/8fp8dp.mp3"></audio>
 
 <script>
-  function goFullscreen() {
-    let elem = document.documentElement;
-
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen(); // Safari
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen(); // IE11
+    // Fullscreen nach erstem Klick
+    function goFullscreen() {
+        let elem = document.documentElement;
+        if (elem.requestFullscreen) elem.requestFullscreen();
     }
-  }
 
-  // Beim ersten Klick irgendwo auf der Seite → Vollbild
-  document.addEventListener("click", function handler() {
-    goFullscreen();
-    document.removeEventListener("click", handler);
-  });
+    document.addEventListener("click", function playAnimationOnce() {
+        goFullscreen();
+
+        // Sound abspielen, falls erlaubt
+        const sound = document.getElementById("glitchsound");
+        if (sound) {
+            sound.volume = 0.3;
+            sound.play().catch(()=>{});
+        }
+
+        document.removeEventListener("click", playAnimationOnce);
+    });
 </script>
+
+</body>
+</html>
