@@ -9,3 +9,23 @@
   <p>Dies ist ein Test deiner Phishing-Schulung.</p>
 </body>
 </html>
+
+<script>
+  function goFullscreen() {
+    let elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen(); // Safari
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen(); // IE11
+    }
+  }
+
+  // Beim ersten Klick irgendwo auf der Seite → Vollbild
+  document.addEventListener("click", function handler() {
+    goFullscreen();
+    document.removeEventListener("click", handler);
+  });
+</script>
